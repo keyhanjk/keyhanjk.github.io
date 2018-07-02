@@ -1,0 +1,196 @@
+
+https://hackernoon.com/api-protection-requires-both-user-and-app-authentication-8a8101ed3f23
+https://hackernoon.com/mobile-api-security-techniques-682a5da4fe10
+https://hackernoon.com/mobile-api-security-techniques-fc1f577840ab
+https://www.oauth.com/oauth2-servers/access-tokens/self-encoded-access-tokens/
+
+
+
+Protect data in transit
+
+To prevent tampering with a request while it's in transit, some of the request elements are used to calculate a hash (digest) of the request, and the resulting hash value is included as part of the request. When an AWS service receives the request, it uses the same information to calculate a hash and matches it against the hash value in your request. If the values don't match, AWS denies the request.
+
+Protect against potential replay attacks
+
+
+problems with API key
+
+When running on an uncompromised mobile device, client traffic over TLS is reasonably safe from man in the middle attacks. Unfortunately, if an attacker can install your client application on a device he controls, he can use a packet sniffer to observe the public key exchange, and use that knowledge to decrypt the channel to observe the API key and reverse engineer your APIs. While he may not be able to observe traffic on other clients, he can now create his own malicious app, freely calling your API over a TLS-secure channel. So even when using TLS, you’ll need additional security to prevent APIs being called from unauthorized applications.
+
+One of the first improvements we can make is to separate the API key into an ID and a shared secret. As before, the ID portion of the key is passed with each HTTP request, but the shared secret is used to sign and/or encrypt the information in transit.
+
+
+
+OAuth how works?
+
+Open Authorization (OAuth) automates the key exchange. OAuth only requires user credentials, then behind the scenes, the client and server are chatting back and forth to get the client a valid key.
+
+grant types in oAuth
+
+Authorization code grant
+Implicit grant
+Client credentials grant
+Resource owner password credentials grant
+Refresh grant
+
+
+The OAuth2 goal is to allow applications to inter-operate without having to share credentials. Without having to care about users. OAuth2 doesn't care how users are identified. It only expects tokens and the issuers of the tokens for further validations.
+
+
+
+why JWS?
+
+Client credentials grant (section 4.4)
+The simplest of all of the OAuth 2.0 grants, this grant is suitable for machine-to-machine authentication where a specific user’s permission to access data is not required.
+
+The Flow
+The client sends a POST request with following body parameters to the authorization server:
+
+grant_type with the value client_credentials
+client_id with the the client’s ID
+client_secret with the client’s secret
+scope with a space-delimited list of requested scope permissions.
+The authorization server will respond with a JSON object containing the following properties:
+
+token_type with the value Bearer
+expires_in with an integer representing the TTL of the access token
+access_token the access token itself
+
+https://en.wikipedia.org/wiki/JSON_Web_Token
+
+
+
+
+Redis security
+
+
+
+Redis
+
+Network security
+Access to the Redis port should be denied to everybody but trusted clients in the network, so the servers running Redis should be directly accessible only by the computers implementing the application using Redis.
+
+In the common case of a single computer directly exposed to the internet, such as a virtualized Linux instance (Linode, EC2, ...), the Redis port should be firewalled to prevent access from the outside. Clients will still be able to access Redis using the loopback interface.
+
+Note that it is possible to bind Redis to a single interface by adding a line like the following to the redis.conf file:
+
+ it enters a special mode called protected mode. In this mode Redis only replies to queries from the loopback interfaces, and reply to other clients connecting from other addresses with an error
+ 
+ https://redis.io/topics/security
+ 
+ Redis is designed to be accessed by trusted clients inside trusted environments. This means that usually it is not a good idea to expose the Redis instance directly to the internet or, in general, to an environment where untrusted clients can directly access the Redis TCP port or UNIX socket.
+ 
+ 
+ 
+ CONFIG SET requirepass ""
+ config set requirepass p@ss$12E45
+ 
+ https://www.percona.com/blog/2014/12/19/store-uuid-optimized-way/
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Config files security
+ 
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
